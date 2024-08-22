@@ -1,14 +1,14 @@
 groups:
   - name: Host
     rules:
-      - alert: 节点内存不足
-        expr: (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes * 100 < 30) * on(instance) group_left (nodename) node_uname_info{nodename=~".+"}
+      - alert: 主机可用内存 < 20%
+        expr: (node_memory_MemAvailable_bytes / node_memory_MemTotal_bytes * 100 < 20) * on(instance) group_left (nodename) node_uname_info{nodename=~".+"}
         for: 5m
         labels:
           severity: warning
         annotations:
-          summary: 节点内存不足 (instance {{ $labels.instance }})
-          description: "持续5分钟节点可用内存剩余 (< 30% left)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+          summary: 持续5分钟主机可用内存 < 20% (instance {{ $labels.instance }})
+          description: "持续5分钟主机可用内存 < 20% \n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
       - alert: 节点内存压力很大,主要页面错误发生率很高
         expr: (rate(node_vmstat_pgmajfault[1m]) > 1000) * on(instance) group_left (nodename) node_uname_info{nodename=~".+"}
         for: 2m
@@ -17,14 +17,14 @@ groups:
         annotations:
           summary: 该节点内存压力很大,主要页面错误发生率很高(instance {{ $labels.instance }})
           description: "该节点内存压力很大,主要页面错误发生率很高\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
-      - alert: 主机内存未充分利用
-        expr: (100 - (avg_over_time(node_memory_MemAvailable_bytes[30m]) / node_memory_MemTotal_bytes * 100) < 20) * on(instance) group_left (nodename) node_uname_info{nodename=~".+"}
+      - alert: 主机内存使用率< 20%
+        expr: (100 - (avg_over_time(node_memory_MemAvailable_bytes[1w]) / node_memory_MemTotal_bytes * 100) < 20) * on(instance) group_left (nodename) node_uname_info{nodename=~".+"}
         for: 1m
         labels:
           severity: info
         annotations:
-          summary: 主机内存未充分利用(instance {{ $labels.instance }})
-          description: "节点内存使用率在 1 月内< 20%。考虑减少内存空间。(instance {{ $labels.instance }})\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+          summary: 主机内存使用率< 20% (instance {{ $labels.instance }})
+          description: "节点内存使用率在 1 月内< 20%,可以考虑减少内存。(instance {{ $labels.instance }})\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
       - alert: 主机网络In吞吐量异常
         expr: (sum by (instance) (rate(node_network_receive_bytes_total[2m])) / 1024 / 1024 > 100) * on(instance) group_left (nodename) node_uname_info{nodename=~".+"}
         for: 5m
