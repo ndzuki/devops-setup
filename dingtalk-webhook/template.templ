@@ -14,41 +14,56 @@
 {{ end }}{{ end }}
 
 {{ define "default.__text_alert_list" }}{{ range . }}
-#### \[{{ .Labels.severity | upper }}\] {{ .Annotations.summary }}
+---
+>告警级别: {{ .Labels.severity | upper }}
 
-**Description:** {{ .Annotations.description }}
+>实例地址：{{ .Labels.instance }}
 
-**Graph:** [📈]({{ .GeneratorURL }})
+>业务名称：{{ .Labels.job }}
 
-**Details:**
-{{ range .Labels.SortedPairs }}{{ if and (ne (.Name) "severity") (ne (.Name) "summary") }}> - {{ .Name }}: {{ .Value |
-markdown | html }}
-{{ end }}{{ end }}
-{{ end }}{{ end }}
+>触发时间：{{ .StartsAt | date "2006-01-02 15:04:05" }}
+
+>结束时间：{{ .EndsAt | date "2006-01-02 15:04:05" }}
+
+**[{{ .Annotations.description }}]({{ default .GeneratorURL .Annotations.url }})**
+
+{{ end }}
+{{ end }}
 
 {{/* Default */}}
 {{ define "default.title" }}{{ template "__subject" . }}{{ end }}
 {{ define "default.content" }}#### \[{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{
-end }}\] **[{{ index .GroupLabels "alertname" }}]({{ template "__alertmanagerURL" . }})**
+end }}\] **[{{ index .GroupLabels "alertname" }}]({{ "http://grafana.m.hiseven.cc/alerting/list" }})**
 {{ if gt (len .Alerts.Firing) 0 -}}
-**Alerts Firing**
+**<font color=#ED350E>Prometheus告警信息</font>**
 {{ template "default.__text_alert_list" .Alerts.Firing }}
 {{ range .AtMobiles }}@{{ . }}{{ end }}
 {{- end }}
 {{ if gt (len .Alerts.Resolved) 0 -}}
-**Alerts Resolved**
+**<font color=#54CE04>Prometheus恢复信息</font>**
 {{ template "default.__text_alert_list" .Alerts.Resolved }}
 {{ range .AtMobiles }}@{{ . }}{{ end }}
 {{- end }}
 {{- end }}
 
-{{/* Legacy */}}
-{{ define "legacy.title" }}{{ template "__subject" . }}{{ end }}
-{{ define "legacy.content" }}#### \[{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end
-}}\] **[{{ index .GroupLabels "alertname" }}]({{ template "__alertmanagerURL" . }})**
-{{ template "__text_alert_list" .Alerts.Firing }}
-{{- end }}
-
 {{/* Following names for compatibility */}}
 {{ define "ding.link.title" }}{{ template "default.title" . }}{{ end }}
 {{ define "ding.link.content" }}{{ template "default.content" . }}{{ end }}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

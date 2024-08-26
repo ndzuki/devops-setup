@@ -1,0 +1,59 @@
+groups:
+  - name: Host
+    rules:
+      - alert: 节点内存压力很大,主要页面错误发生率很高
+        expr: (rate(node_vmstat_pgmajfault[1m]) > 1000)
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: 该节点内存压力很大,主要页面错误发生率很高(instance {{ $labels.instance }})
+          description: "该节点内存压力很大,主要页面错误发生率很高\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+      - alert: 磁盘即将耗尽了可用 inode
+        expr: (node_filesystem_files_free{fstype=~"ext4|xfs"} / node_filesystem_files{fstype=~"ext4|xfs"} * 100 < 10 and ON (instance, device, mountpoint) node_filesystem_readonly == 0)
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: 磁盘即将耗尽了可用 inode(instance {{ $labels.instance }})
+          description: "磁盘即将耗尽了可用 inode < 10%\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+      - alert: 主机文件系统设备错误
+        expr: node_filesystem_device_error == 1
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: 主机文件系统设备错误 (instance {{ $labels.instance }})
+          description: "{{ $labels.instance }}: {{ $labels.mountpoint }} 文件系统的设备错误\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+      - alert: 预计将在未来 24 小时内耗尽 inode
+        expr: (node_filesystem_files_free{fstype!="msdosfs"} / node_filesystem_files{fstype!="msdosfs"} * 100 < 10 and predict_linear(node_filesystem_files_free{fstype!="msdosfs"}[1h], 24 * 3600) < 0 and ON (instance, device, mountpoint) node_filesystem_readonly{fstype!="msdosfs"} == 0)
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: 预计将在未来 24 小时内耗尽 inode (instance {{ $labels.instance }})
+          description: "按当前写入速率，文件系统预计将在未来 24 小时内耗尽 inode\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+      - alert: 主机磁盘IO异常
+        expr: (rate(node_disk_io_time_seconds_total[1m]) > 0.9)
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: 主机磁盘IO异常 (instance {{ $labels.instance }})
+          description: "{{ $labels.instance }} 上 IO 花费的时间太长。请检查存储是否存在问题。\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+      - alert: 主机conntrack使用率>80%
+        expr: (node_nf_conntrack_entries / node_nf_conntrack_entries_limit > 0.8)
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: 主机conntrack使用率>80% (instance {{ $labels.instance }})
+          description: "conntrack 使用率>80%\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"
+      - alert: 主机时钟偏差
+        expr: ((node_timex_offset_seconds > 0.05 and deriv(node_timex_offset_seconds[5m]) >= 0) or (node_timex_offset_seconds < -0.05 and deriv(node_timex_offset_seconds[5m]) <= 0))
+        for: 10m
+        labels:
+          severity: warning
+        annotations:
+          summary: 主机时钟偏差 (instance {{ $labels.instance }})
+          description: "检测到时钟偏差,时钟不同步,确保在此主机上正确配置 NTP。\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"

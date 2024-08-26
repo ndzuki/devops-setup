@@ -1,0 +1,25 @@
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata:
+  name: webhook2dingtalk
+  labels:
+    alertmanagerConfig: webhook2dingtalk
+spec:
+  route:
+    groupBy: ['job']
+    groupWait: 30s
+    groupInterval: 5m
+    repeatInterval: 12h
+    receiver: 'dingtalk-webhook'
+    continue: true
+    matchers:
+      - name: service
+        regex: true
+        value: "!monitoring-kube-prometheus-kube-proxy"
+      - name: namespace
+        regex: true
+        value: "argocd|test|ingress-nginx|monitoring|kube-system|default|kubesphere-system|kube-public|kubekey-system"
+  receivers:
+    - name: 'dingtalk-webhook'
+      webhookConfigs:
+        - url: 'http://172.30.13.81:8060/dingtalk/webhook/send'

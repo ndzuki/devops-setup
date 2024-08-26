@@ -1,0 +1,13 @@
+name: 'local'
+services:
+  webhook:
+    image: timonwong/prometheus-webhook-dingtalk
+    container_name: "webhook"
+    hostname: "webhook"
+    ports:
+      - "8060:8060"
+    restart: always
+    command: ["--config.file=/etc/prometheus-webhook-dingtalk/config.yml", "--web.enable-ui", "--web.enable-lifecycle"]
+    volumes:
+      - ./dingtalk-webhook/config.yml:/etc/prometheus-webhook-dingtalk/config.yml
+      - ./template.templ:/etc/prometheus-webhook-dingtalk/template.tmpl
