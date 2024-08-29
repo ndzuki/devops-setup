@@ -1,0 +1,56 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: ingress-nginx-controller
+  namespace: ingress-nginx
+  labels:
+    app.kubernetes.io/component: controller
+    app.kubernetes.io/instance: ingress-nginx
+    app.kubernetes.io/name: ingress-nginx
+    app.kubernetes.io/part-of: ingress-nginx
+    app.kubernetes.io/version: 1.10.1
+  annotations:
+spec:
+  ports:
+    - name: prometheus
+      protocol: TCP
+      port: 10254
+      targetPort: prometheus
+      nodePort: 29779
+    - name: http
+      protocol: TCP
+      appProtocol: http
+      port: 80
+      targetPort: http
+      nodePort: 80
+    - name: https
+      protocol: TCP
+      appProtocol: https
+      port: 443
+      targetPort: https
+      nodePort: 443
+    # if out of nodePort range, need to add flag "    - --service-node-port-range=80-65000" into /etc/kubernetes/manifast/kube-apiserver.yaml
+    - name: proxied-tcp-9080
+      port: 9080
+      targetPort: 9080
+      nodePort: 29080
+      protocol: TCP
+    - name: proxied-tcp-58080
+      port: 58080
+      targetPort: 58080
+      nodePort: 28080
+      protocol: TCP
+  selector:
+    app.kubernetes.io/component: controller
+    app.kubernetes.io/instance: ingress-nginx
+    app.kubernetes.io/name: ingress-nginx
+  clusterIP: 10.233.53.149
+  clusterIPs:
+    - 10.233.53.149
+  type: NodePort
+  sessionAffinity: None
+  externalTrafficPolicy: Cluster
+  ipFamilies:
+    - IPv4
+  ipFamilyPolicy: SingleStack
+  internalTrafficPolicy: Cluster

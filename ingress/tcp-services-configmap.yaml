@@ -1,0 +1,10 @@
+# create tcp-proxy with ingress
+# https://kubernetes.github.io/ingress-nginx/user-guide/exposing-tcp-udp-services/
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: tcp-services
+  namespace: ingress-nginx
+data:
+  9080: "test/imx-terminal-control-center:9080"
+  58080: "test/imx-terminal-control-center:8080"
