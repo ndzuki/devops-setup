@@ -10,4 +10,4 @@ services:
     command: ["--config.file=/etc/prometheus-webhook-dingtalk/config.yml", "--web.enable-ui", "--web.enable-lifecycle"]
     volumes:
       - ./dingtalk-webhook/config.yml:/etc/prometheus-webhook-dingtalk/config.yml
-      - ./template.templ:/etc/prometheus-webhook-dingtalk/template.tmpl
+      - ./dingtalk-webhook/dingtalk-template.templ:/etc/prometheus-webhook-dingtalk/template.tmpl

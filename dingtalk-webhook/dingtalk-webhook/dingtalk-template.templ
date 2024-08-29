@@ -1,6 +1,7 @@
 {{ define "__subject" }}[{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{ end }}] {{
 .GroupLabels.SortedPairs.Values | join " " }} {{ if gt (len .CommonLabels) (len .GroupLabels) }}({{ with
 .CommonLabels.Remove .GroupLabels.Names }}{{ .Values | join " " }}{{ end }}){{ end }}{{ end }}
+
 {{ define "__alertmanagerURL" }}{{ .ExternalURL }}/#/alerts?receiver={{ .Receiver }}{{ end }}
 
 {{ define "__text_alert_list" }}{{ range . }}
@@ -32,36 +33,30 @@
 
 {{/* Default */}}
 {{ define "default.title" }}{{ template "__subject" . }}{{ end }}
+
 {{ define "default.content" }}#### \[{{ .Status | toUpper }}{{ if eq .Status "firing" }}:{{ .Alerts.Firing | len }}{{
 end }}\] **[{{ index .GroupLabels "alertname" }}]({{ "http://grafana.m.hiseven.cc/alerting/list" }})**
+
 {{ if gt (len .Alerts.Firing) 0 -}}
 **<font color=#ED350E>Prometheus告警信息</font>**
 {{ template "default.__text_alert_list" .Alerts.Firing }}
 {{ range .AtMobiles }}@{{ . }}{{ end }}
+
 {{- end }}
+
+
 {{ if gt (len .Alerts.Resolved) 0 -}}
 **<font color=#54CE04>Prometheus恢复信息</font>**
 {{ template "default.__text_alert_list" .Alerts.Resolved }}
 {{ range .AtMobiles }}@{{ . }}{{ end }}
+
 {{- end }}
 {{- end }}
+
 
 {{/* Following names for compatibility */}}
 {{ define "ding.link.title" }}{{ template "default.title" . }}{{ end }}
 {{ define "ding.link.content" }}{{ template "default.content" . }}{{ end }}
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
