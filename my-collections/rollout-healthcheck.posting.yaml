@@ -1,0 +1,3 @@
+name: rollout-healthcheck
+description: app-flow/rollout/api/v1
+url: localhost:8080

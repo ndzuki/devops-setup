@@ -1,0 +1,2 @@
+name: terminal/record/getTerminalDeviceList
+url: http://172.30.13.85:38080/task/terminal/record/getTerminalDeviceList?platformType=3

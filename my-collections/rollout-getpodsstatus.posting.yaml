@@ -1,0 +1,12 @@
+name: rollout-getPodsStatus
+method: POST
+url: http://localhost:8081/rollout/api/v1/getPodsStatus
+body:
+  content: |-
+    {
+      "namespace": "test",
+      "service_name": "imx-gateway"
+    }
+headers:
+- name: Content-Type
+  value: application/json

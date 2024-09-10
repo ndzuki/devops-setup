@@ -1,0 +1,11 @@
+name: rollout
+description: execute rollout
+method: POST
+url: http://localhost:8081/rollout/api/v1/execute
+body:
+  content: |-
+    {
+      "namespace": "test",
+      "rollout_name": "imx-gateway",
+      "rollout_action": 6
+    }
