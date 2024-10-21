@@ -40,13 +40,55 @@ spec:
       targetPort: 58080
       nodePort: 28080
       protocol: TCP
+    - name: tcp-debug-auth
+      port: 18050
+      targetPort: 18050
+      nodePort: 18050
+      protocol: TCP
+    - name: tcp-debug-gen
+      port: 18051
+      targetPort: 18051
+      nodePort: 18051
+      protocol: TCP
+    - name: tcp-debug-resource
+      port: 18052
+      targetPort: 18052
+      nodePort: 18052
+      protocol: TCP
+    - name: tcp-debug-system
+      port: 18053
+      targetPort: 18053
+      nodePort: 18053
+      protocol: TCP
+    - name: tcp-debug-terminal
+      port: 18054
+      targetPort: 18054
+      nodePort: 18054
+      protocol: TCP
+    - name: tcp-debug-translate
+      port: 18055
+      targetPort: 18055
+      nodePort: 18055
+      protocol: TCP
+    - name: tcp-debug-account
+      port: 18056
+      targetPort: 18056
+      nodePort: 18056
+      protocol: TCP
+    - name: tcp-debug-ip
+      port: 18057
+      targetPort: 18057
+      nodePort: 18057
+      protocol: TCP
+    - name: tcp-debug-login
+      port: 18058
+      targetPort: 18058
+      nodePort: 18058
+      protocol: TCP
   selector:
     app.kubernetes.io/component: controller
     app.kubernetes.io/instance: ingress-nginx
     app.kubernetes.io/name: ingress-nginx
-  clusterIP: 10.233.53.149
-  clusterIPs:
-    - 10.233.53.149
   type: NodePort
   sessionAffinity: None
   externalTrafficPolicy: Cluster

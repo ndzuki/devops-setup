@@ -1,0 +1,14 @@
+name: configuration/delete
+description: yearing/configuration search
+method: POST
+url: http://localhost:8000/api/v2/configuration/delete
+body:
+  content: |-
+    {
+      "data_id":"test-data-2",
+      "group_id":"test",
+      "namespace":"public"
+    }
+headers:
+- name: Content-Type
+  value: application/json

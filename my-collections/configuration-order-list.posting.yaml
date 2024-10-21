@@ -1,0 +1,23 @@
+name: configuration/order-list
+description: yearing/configuration/order-list
+method: POST
+url: http://localhost:8000/api/v2/configuration/order
+body:
+  content: |-
+    {
+      "current": 0,
+      "pageSiz": 10,
+      "expr": {
+        "text": "test",
+        "username":"admin"
+      },
+      "page": 1,
+      "data": [{
+        "creator":"admin"
+      }]
+    }
+headers:
+- name: Content-Type
+  value: application/json
+- name: Authorization
+  value: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjkyNDY1MDMsImlzX3JlY29yZCI6ZmFsc2UsIm5hbWUiOiJhZG1pbiIsInJlYWxfbmFtZSI6Iui2hee6p-euoeeQhuWRmCJ9.FSovlQgkAJ-XelAmN9Nr1BfFb_orCyhj2Mu3PYiCAYw

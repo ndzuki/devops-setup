@@ -1,0 +1,17 @@
+name: configuration/order-create
+description: yearing/configuration/order-list
+method: PUT
+url: http://localhost:8000/api/v2/configuration/order
+body:
+  content: "{\n  \"title\":\"ignore this message\",\n\t\"reason\":1,\n\t\"type\":\
+    \ 3,\n\t\"desc\":\"test order\",\n\t\"confs\":  [\n    {\n    \"data_id\": \"\
+    test1\",\n    \"group_id\":\"test1\",\n    \"namespace\":\"public\",\n    \"desc\"\
+    :\"test1\",\n    \"format\":\"text\",\n    \"content\":\"test1\"\n     },\n  \
+    \   {\n       \"data_id\":\"test2\",\n       \"group_id\":\"test2\",\n       \"\
+    namespace\":\"public\",\n       \"desc\":\"test2\",\n       \"format\":\"yaml\"\
+    ,\n       \"content\":\"test2\"\n     }\n ]\n}"
+headers:
+- name: Content-Type
+  value: application/json
+- name: Authorization
+  value: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3MjkyNDY1MDMsImlzX3JlY29yZCI6ZmFsc2UsIm5hbWUiOiJhZG1pbiIsInJlYWxfbmFtZSI6Iui2hee6p-euoeeQhuWRmCJ9.FSovlQgkAJ-XelAmN9Nr1BfFb_orCyhj2Mu3PYiCAYw

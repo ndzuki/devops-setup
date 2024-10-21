@@ -8,3 +8,12 @@ metadata:
 data:
   9080: "test/imx-terminal-control-center:9080"
   58080: "test/imx-terminal-control-center:8080"
+  18050: "test/imx-auth:18050"
+  18051: "test/imx-gen:18051"
+  18052: "test/imx-resource:18052"
+  18053: "test/imx-system:18053"
+  18054: "test/imx-terminal-control-center:18054"
+  18055: "test/imx-translate:18055"
+  18056: "test/imx-ws-account:18056"
+  18057: "test/imx-ws-ip:18057"
+  18058: "test/imx-ws-login:18058"

@@ -1,0 +1,14 @@
+name: configuration/search
+description: yearing/configuration search
+method: POST
+url: http://localhost:8000/api/v2/configuration/search
+body:
+  content: |-
+    {
+      "data_id":"imx-auth.yml",
+      "group_id":"DEFAULT_GROUP",
+      "namespace":"test"
+    }
+headers:
+- name: Content-Type
+  value: application/json

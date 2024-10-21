@@ -1,0 +1,14 @@
+name: configuration/get
+description: yearing/configuration search
+method: POST
+url: http://localhost:8000/api/v2/configuration/get
+body:
+  content: |-
+    {
+      "data_id":"imx-job.yml",
+      "group_id":"DEFAULT_GROUP",
+      "namespace":"test"
+    }
+headers:
+- name: Content-Type
+  value: application/json
