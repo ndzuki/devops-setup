@@ -30,6 +30,26 @@ spec:
       targetPort: https
       nodePort: 443
     # if out of nodePort range, need to add flag "    - --service-node-port-range=80-65000" into /etc/kubernetes/manifast/kube-apiserver.yaml
+    - name: monitor-tcp-9100
+      port: 9100
+      targetPort: 9100
+      nodePort: 29100
+      protocol: TCP
+    - name: sentinel-tcp-8718
+      port: 8718
+      targetPort: 8718
+      nodePort: 28718
+      protocol: TCP
+    - name: seata-tcp-7091
+      port: 7091
+      targetPort: 7091
+      nodePort: 27091
+      protocol: TCP
+    - name: seata-tcp-8091
+      port: 8091
+      targetPort: 8091
+      nodePort: 28091
+      protocol: TCP
     - name: proxied-tcp-9080
       port: 9080
       targetPort: 9080

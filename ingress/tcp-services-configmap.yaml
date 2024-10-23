@@ -6,6 +6,10 @@ metadata:
   name: tcp-services
   namespace: ingress-nginx
 data:
+  9100: "default/monitor-cs:9100"
+  8718: "default/sentinel-cs:8718"
+  7091: "default/seata-cs:7091"
+  8091: "default/seata-cs:8091"
   9080: "test/imx-terminal-control-center:9080"
   58080: "test/imx-terminal-control-center:8080"
   18050: "test/imx-auth:18050"
