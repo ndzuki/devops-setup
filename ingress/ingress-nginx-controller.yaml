@@ -105,6 +105,11 @@ spec:
       targetPort: 18058
       nodePort: 18058
       protocol: TCP
+    - name: tcp-debug-counter
+      port: 18059
+      targetPort: 18059
+      nodePort: 18059
+      protocol: TCP
   selector:
     app.kubernetes.io/component: controller
     app.kubernetes.io/instance: ingress-nginx
