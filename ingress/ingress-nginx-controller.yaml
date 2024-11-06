@@ -30,6 +30,11 @@ spec:
       targetPort: https
       nodePort: 443
     # if out of nodePort range, need to add flag "    - --service-node-port-range=80-65000" into /etc/kubernetes/manifast/kube-apiserver.yaml
+    - name: xxljob-tcp-8080
+      port: 8080
+      targetPort: 8080
+      nodePort: 38080
+      protocol: TCP
     - name: monitor-tcp-9100
       port: 9100
       targetPort: 9100
@@ -114,6 +119,11 @@ spec:
       port: 18060
       targetPort: 18060
       nodePort: 18060
+      protocol: TCP
+    - name: tcp-debug-seat
+      port: 18061
+      targetPort: 18061
+      nodePort: 18061
       protocol: TCP
   selector:
     app.kubernetes.io/component: controller
