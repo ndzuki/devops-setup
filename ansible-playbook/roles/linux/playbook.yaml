@@ -1,0 +1,43 @@
+- name: Linux system environment setup
+  hosts: all
+  vars_files:
+    - vars/common.yaml
+  remote_user: root
+  pre_tasks:
+    - name: Upgrade os
+      when: ansible_os_family == "Debian"
+      ansible.builtin.apt:
+        upgrade: dist
+    - name: Update cache
+      when: ansible_os_family == "Debian"
+      ansible.builtin.apt:
+        update_cache: true
+  tasks:
+    - name: Set timezone Asia/Shanghai
+      ansible.builtin.file:
+        src: /usr/share/zoneinfo/Asia/Shanghai
+        dest: /etc/localtime
+        state: link
+    - name: Export ENV into /etc/environment
+      ansible.builtin.copy:
+        content: |
+          export LANG=en_US.UTF-8
+    - name: Add user {{ userame }}
+      ansible.builtin.user:
+        name: "{{ username }}"
+        state: present
+        shell: /bin/bash
+        uid: "{{ uid }}"
+        create_home: true
+    - name: Copy sysctl.conf.j2 to /etc/sysctl.conf
+      ansible.builtin.template:
+        src: /template/sysctl.conf.j2
+        dest: /etc/sysctl.conf
+        owner: root
+        mode: '0644'
+      notify:
+        - Reload sysctl.conf
+  handlers:
+    - name: Reload sysctl.conf
+      ansible.builtin.shell:
+        cmd: sysctl -p

@@ -60,7 +60,7 @@ spec:
       targetPort: 9080
       nodePort: 38080
       protocol: TCP
-    - name: proxied-tcp-58080
+    - name: terminal-http-58080
       port: 58080
       targetPort: 58080
       nodePort: 28080
