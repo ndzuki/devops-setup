@@ -1,0 +1,22 @@
+- name: Linux system environment setup
+  hosts: all
+  remote_user: root
+  tasks:
+    - name: Update repos
+    - name: Install packages
+    - name: Set timezone
+      ansible.builtin.file:
+        src: /usr/share/zoneinfo/Asia/Shanghai
+        dest: /etc/localtime
+        state: link
+    - name: Export ENV into /etc/environment
+      ansible.builtin.copy:
+        content: |
+          export LANG=en_US.UTF-8
+    - name: Add user app
+      ansible.builtin.user:
+        name: app
+        shell: /bin/bash
+        uid: 2000
+        create_home: true
+    - name: Copy sysctl.conf to /etc/sysctl.conf

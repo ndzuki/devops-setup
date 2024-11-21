@@ -33,7 +33,7 @@ spec:
     - name: xxljob-tcp-8080
       port: 8080
       targetPort: 8080
-      nodePort: 38080
+      nodePort: 38000
       protocol: TCP
     - name: monitor-tcp-9100
       port: 9100
@@ -55,10 +55,10 @@ spec:
       targetPort: 8091
       nodePort: 28091
       protocol: TCP
-    - name: proxied-tcp-9080
+    - name: terminal-websocket-9080
       port: 9080
       targetPort: 9080
-      nodePort: 29080
+      nodePort: 38080
       protocol: TCP
     - name: proxied-tcp-58080
       port: 58080
