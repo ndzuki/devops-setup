@@ -13,6 +13,11 @@
       ansible.builtin.apt:
         update_cache: true
   tasks:
+    - name: Set history with timestamp
+      ansible.builtin.copy:
+        content: |
+          export HISTTIMEFORMAT="%d/%m/%y %T "
+        dest: /etc/environment
     - name: Set timezone Asia/Shanghai
       ansible.builtin.file:
         src: /usr/share/zoneinfo/Asia/Shanghai
@@ -22,6 +27,7 @@
       ansible.builtin.copy:
         content: |
           export LANG=en_US.UTF-8
+        dest: /etc/locale.conf
     - name: Add user {{ userame }}
       ansible.builtin.user:
         name: "{{ username }}"
