@@ -125,6 +125,11 @@ spec:
       targetPort: 18061
       nodePort: 18061
       protocol: TCP
+    - name: tcp-debug-chat
+      port: 18062
+      targetPort: 18062
+      nodePort: 18062
+      protocol: TCP
   selector:
     app.kubernetes.io/component: controller
     app.kubernetes.io/instance: ingress-nginx
